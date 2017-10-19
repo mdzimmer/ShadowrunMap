@@ -97,7 +97,15 @@
 		* Reference to Firebase database.
 		* @const
 		*/
-		var firebase = new Firebase('https://shadowrunmap.firebaseio.com/');
+		var config = {
+		    apiKey: "AIzaSyCc6Z3xARTskSNQZOC8XmLKXmyUn3gXmjs",
+		    authDomain: "shadowrunmap.firebaseapp.com",
+		    databaseURL: "https://shadowrunmap.firebaseio.com",
+		    projectId: "shadowrunmap",
+		    storageBucket: "shadowrunmap.appspot.com",
+		    messagingSenderId: "9558394399"
+		  };
+		  firebase.initializeApp(config);
 
 		/**
 		* Data object to be written to Firebase.
