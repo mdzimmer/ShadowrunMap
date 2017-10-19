@@ -70,7 +70,7 @@
 		map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
 
 		var ctaLayer = new google.maps.KmlLayer({
-          url: "https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw",
+          url: "https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw" + "&dummy=" + (new Date()).getTime(),
           map: map
         });
       }
