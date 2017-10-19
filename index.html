@@ -22,11 +22,46 @@
     <div id="map"></div>
     <script>
       var map;
+      var featureOpts = [
+	    {
+	      featureType: "all",
+	      elementType: "labels",
+	      stylers: [
+	      { visibility: "off" }
+	      ]
+	    },
+	    {
+	      featureType: "administrative.country",
+	      elementType: "geometry.fill",
+	      stylers: [
+	      { visibility: "off" }
+	      ]
+	    },
+	    {
+	      featureType: "administrative.country",
+	      elementType: "geometry.stroke",
+	      stylers: [
+	      { visibility: "off" }
+	      ]
+	    }
+	  ];
+	  var MY_MAPTYPE_ID = "Shadowrun";
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
+          center: cairo,
+          zoom: 1,
+          mapTypeControlOptions: {
+		    mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+		  },
+		  mapTypeId: MY_MAPTYPE_ID
         });
+       	var styledMapOptions = {
+		  name: 'Custom Style'
+		};
+
+		var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+
+		map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCplpgXDpN4kI1ovfu014LV1xw_bkMGXo8&callback=initMap"
