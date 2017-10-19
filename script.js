@@ -3,7 +3,7 @@ var brooklyn = new google.maps.LatLng(40.6743890, -73.9455);
 
 var MY_MAPTYPE_ID = 'custom_style';
 
-function initialize() {
+function initMap() {
   var featureOpts = [
     {
       featureType: "all",
