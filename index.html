@@ -17,7 +17,7 @@
         padding: 0;
       }
     </style>
-    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+    <script src="https://cdn.firebase.com/js/client/4.5.2/firebase.js"></script>
   </head>
   <body>
     <div id="map"></div>
@@ -72,8 +72,6 @@
 
 		map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
 
-		var testUrl = "https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw&dummy=" + (new Date()).getTime();
-		console.log(testUrl);
 		var ctaLayer = new google.maps.KmlLayer({
           url: "https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw&dummy=" + (new Date()).getTime(),
           map: map
@@ -99,7 +97,7 @@
 		* Reference to Firebase database.
 		* @const
 		*/
-		var firebase = new Firebase('https://shadowrunmap.firebaseio.com/');
+		var firebase = new Firebase('https://shadowrunmap.firebaseio.com');
 
 		/**
 		* Data object to be written to Firebase.
