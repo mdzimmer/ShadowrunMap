@@ -24,34 +24,43 @@
     <script>
       var map;
       var featureOpts = [
-		  {
-		    "featureType": "administrative.country",
-		    "elementType": "geometry.fill",
-		    "stylers": [
-		      {
-		        "visibility": "off"
-		      }
-		    ]
-		  },
-		  {
-		    "featureType": "administrative.country",
-		    "elementType": "geometry.stroke",
-		    "stylers": [
-		      {
-		        "visibility": "off"
-		      }
-		    ]
-		  },
-		  {
-		    "featureType": "administrative.country",
-		    "elementType": "labels.text",
-		    "stylers": [
-		      {
-		        "visibility": "off"
-		      }
-		    ]
-		  }
-		];
+	  {
+	    "featureType": "administrative.country",
+	    "elementType": "geometry.stroke",
+	    "stylers": [
+	      {
+	        "visibility": "off"
+	      }
+	    ]
+	  },
+	  {
+	    "featureType": "administrative.country",
+	    "elementType": "labels",
+	    "stylers": [
+	      {
+	        "visibility": "off"
+	      }
+	    ]
+	  },
+	  {
+	    "featureType": "administrative.province",
+	    "elementType": "geometry.stroke",
+	    "stylers": [
+	      {
+	        "visibility": "off"
+	      }
+	    ]
+	  },
+	  {
+	    "featureType": "administrative.province",
+	    "elementType": "labels.text",
+	    "stylers": [
+	      {
+	        "visibility": "off"
+	      }
+	    ]
+	  }
+	];
 	  var MY_MAPTYPE_ID = "Shadowrun";
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
