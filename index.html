@@ -24,7 +24,33 @@
     <script>
       var map;
       var featureOpts = [
-
+		  {
+		    "featureType": "administrative.country",
+		    "elementType": "geometry.fill",
+		    "stylers": [
+		      {
+		        "visibility": "off"
+		      }
+		    ]
+		  },
+		  {
+		    "featureType": "administrative.country",
+		    "elementType": "geometry.stroke",
+		    "stylers": [
+		      {
+		        "visibility": "off"
+		      }
+		    ]
+		  },
+		  {
+		    "featureType": "administrative.country",
+		    "elementType": "labels.text",
+		    "stylers": [
+		      {
+		        "visibility": "off"
+		      }
+		    ]
+		  }
 		];
 	  var MY_MAPTYPE_ID = "Shadowrun";
       function initMap() {
