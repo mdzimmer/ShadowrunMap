@@ -6,8 +6,6 @@
       <NetworkLink>
         <Link>
           <href>https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw</href>
-          <refreshMode>onInterval</refreshMode>
-          <refreshInterval>1</refreshInterval>
         </Link>
       </NetworkLink>
     </Folder>
