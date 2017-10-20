@@ -65,6 +65,30 @@
 	  }
 	];
 	  var MY_MAPTYPE_ID = "Shadowrun";
+	  var mouseDown = false;
+	  var tempLat = 0;
+	  var tempLng = 0;
+	  var minTravel = 1;
+	  var curLine = null;
+	  var myMarkers = [];
+	  var myLines = [];
+
+	  function distance(x1, x2, y1, y2) {
+	  	var a = x2 - x1;
+	  	var b = y2 - y1;
+	  	return Math.sqrt(a * a + b * b);
+	  }
+
+	  function guid() {
+		  function s4() {
+		    return Math.floor((1 + Math.random()) * 0x10000)
+		      .toString(16)
+		      .substring(1);
+		  }
+		  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		    s4() + '-' + s4() + s4() + s4();
+		}
+
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 30.0444, lng: 31.2357},
@@ -89,7 +113,46 @@
           map: map
         });
 
-		  //initAuthentication(initFirebase.bind(undefined, heatmap));
+        map.addListener('mousedown', function(e) {
+        	mouseDown = true;
+        	tempLat = e.latLng.lat();
+        	tempLng = e.latLng.lng();
+        	curLine = null;
+        });
+
+        map.addListener('mouseup', function(e) {
+        	mouseDown = false;
+        	tempLat = e.latLng.lat();
+        	tempLng = e.latLng.lng();
+        	if (curLine == null) {
+        		firebase.child('markers').push({
+        			lat: tempLat,
+        			lng: tempLng,
+        			id: guid()
+        		});
+        	} else {
+        		firebase.child('lines').push({
+        			path: curLine,
+        			id: guid()
+        		});
+        	}
+        });
+
+        map.addListener('mousemove', function(e) {
+        	if (!mouseDown) {
+        		return;
+        	}
+        	var curLat = e.latLng.lat();
+        	var curLng = e.latLng.lng();
+        	if (distance(curLat, tempLat, curLng, tempLng) > minTravel) {
+        		if (curLine == null) {
+        			curLine = [];
+        		}
+        		curLine.push({lat: curLat, lng: curLng});
+        		tempLat = curLat;
+        		tempLng = curLng;
+        	}
+        });
       }
 
 		var config = {
@@ -101,21 +164,63 @@
 		    messagingSenderId: "9558394399"
 		  };
 		  firebase.initializeApp(config);
-
-		var data = {
-		  sender: null,
-		  timestamp: null,
-		  lat: null,
-		  lng: null
-		};
-
-		function initAuthentication(onAuthSuccess) {
-		  firebase.auth().signInAnonymously().catch(function(error) {});
-		}
-
-		function initFirebase(heatmap) {
-
-		}
+		  firebase.auth().onAuthStateChanged(function(user) {
+        	var markers = firebase.child('markers');
+        	var lines = firebase.child('lines');
+        	markers.on('child_added', function(snapshot) {
+        		var val = snapshot.val();
+        		var marker = new google.maps.Marker({position: new google.maps.LatLng(val.lat, val.lng)});
+        		marker.setMap(map);
+        		marker.addListener('click', function(e) {
+        			snapshot.ref().remove();
+        		});
+        		myMarkers.push({
+        			marker: marker,
+        			id: val.id
+        		});
+        	});
+        	markers.on('child_removed', function(snapshot) {
+        		var val = snapshot.val();
+        		for (var i = 0; i < myMarkers.length; i++) {
+        			var marker = myMarkers[i];
+        			if (marker.id == val.id) {
+        				marker.marker.setMap(null);
+        				myMarkers.splice(i, 1);
+        				break;
+        			}
+        		}
+        	});
+        	lines.on('child_added', function(snapshot) {
+        		var val = snapshot.val();
+        		var line = new google.maps.Polyline({
+        				path: val.path,
+        				geodesic: false,
+        				strokeColor: '#FF0000',
+        				strokeOpacity: 1,
+        				strokeWeight: 1
+        			});
+        		line.setMap(map);
+        		line.addListener('click', function(e) {
+        			snapshot.ref().remove();
+        		});
+        		myLines.push({
+        			line: line,
+        			id: val.id
+        		});
+        	});
+        	lines.on('child_removed', function(snapshot) {
+        		var val = snapshot.val();
+        		for (var i = 0; i < myLines.length; i++) {
+        			var line = myLines[i];
+        			if (line.id == val.id) {
+        				line.line.setMap(null);
+        				myLines.splice(i, 1);
+        				break;
+        			}
+        		}
+        	});
+        });
+		firebase.auth().signInAnonymously();
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCplpgXDpN4kI1ovfu014LV1xw_bkMGXo8&callback=initMap"
     async defer></script>
