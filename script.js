@@ -33,6 +33,18 @@ var curLine = null;
 var myMarkers = [];
 var myLines = [];
 var firebase = null;
+var config = {
+    apiKey: "AIzaSyCc6Z3xARTskSNQZOC8XmLKXmyUn3gXmjs",
+    authDomain: "shadowrunmap.firebaseapp.com",
+    databaseURL: "https://shadowrunmap.firebaseio.com",
+    projectId: "shadowrunmap",
+    storageBucket: "shadowrunmap.appspot.com",
+    messagingSenderId: "9558394399"
+};
+
+firebase.initializeApp(config);
+firebase.auth().onAuthStateChanged(function() {});
+firebase.auth().signInAnonymously();
 
 function distance(x1, x2, y1, y2) {
     var a = x2 - x1;
@@ -76,19 +88,6 @@ function initMap() {
         url: "https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw&dummy=" + (new Date()).getTime(),
         map: map
     });
-
-    var config = {
-        apiKey: "AIzaSyCc6Z3xARTskSNQZOC8XmLKXmyUn3gXmjs",
-        authDomain: "shadowrunmap.firebaseapp.com",
-        databaseURL: "https://shadowrunmap.firebaseio.com",
-        projectId: "shadowrunmap",
-        storageBucket: "shadowrunmap.appspot.com",
-        messagingSenderId: "9558394399"
-    };
-
-    firebase.initializeApp(config);
-    firebase.auth().onAuthStateChanged(function() {});
-    firebase.auth().signInAnonymously();
 }
 
 function mouseDown(event) {
