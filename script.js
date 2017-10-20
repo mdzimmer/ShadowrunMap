@@ -114,7 +114,7 @@ var featureOpts = [{
     "featureType": "water",
     "elementType": "geometry",
     "stylers": [{
-        "color": "#17263c"
+        "color": "#4976ba"
     }]
 }, {
     "featureType": "water",
