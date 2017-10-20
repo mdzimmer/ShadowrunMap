@@ -42,9 +42,9 @@ var config = {
     messagingSenderId: "9558394399"
 };
 
-firebase.initializeApp(config);
-firebase.auth().onAuthStateChanged(function() {});
-firebase.auth().signInAnonymously();
+// firebase.initializeApp(config);
+// firebase.auth().onAuthStateChanged(function() {});
+// firebase.auth().signInAnonymously();
 
 function distance(x1, x2, y1, y2) {
     var a = x2 - x1;
