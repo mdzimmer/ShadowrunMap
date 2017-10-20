@@ -77,6 +77,10 @@
 		  name: 'Custom Style'
 		};
 
+		map.data.setStyle({
+			strokeWeight: 0
+		});
+
 		var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
 
 		map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
