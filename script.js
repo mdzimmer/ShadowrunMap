@@ -23,7 +23,7 @@ var featureOpts = [{
     "stylers": [{
         "visibility": "off"
     }]
-} {
+}, {
     "elementType": "geometry",
     "stylers": [{
         "color": "#f5f5f5"
