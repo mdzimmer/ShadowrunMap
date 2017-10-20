@@ -22,7 +22,7 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/geocodezip/geoxml3/master/polys/geoxml3.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/geocodezip/geoxml3/master/ProjectedOverlay.js"></script>
   </head>
-  <body>
+  <body onmousedown="mouseDown(event)" onmouseup="mouseUp(event)">
     <div id="map"></div>
     <script>
       var map;
@@ -72,6 +72,7 @@
 	  var curLine = null;
 	  var myMarkers = [];
 	  var myLines = [];
+      var firebase = null;
 
 	  function distance(x1, x2, y1, y2) {
 	  	var a = x2 - x1;
@@ -153,74 +154,86 @@
         		tempLng = curLng;
         	}
         });
+
+        firebase = new Firebase("https://shadowrunmap.firebaseio.com");
+        var markers = firebase.child('markers');
+    	var lines = firebase.child('lines');
+    	markers.on('child_added', function(snapshot) {
+    		var val = snapshot.val();
+    		var marker = new google.maps.Marker({position: new google.maps.LatLng(val.lat, val.lng)});
+    		marker.setMap(map);
+    		marker.addListener('click', function(e) {
+    			snapshot.ref().remove();
+    		});
+    		myMarkers.push({
+    			marker: marker,
+    			id: val.id
+    		});
+    	});
+    	markers.on('child_removed', function(snapshot) {
+    		var val = snapshot.val();
+    		for (var i = 0; i < myMarkers.length; i++) {
+    			var marker = myMarkers[i];
+    			if (marker.id == val.id) {
+    				marker.marker.setMap(null);
+    				myMarkers.splice(i, 1);
+    				break;
+    			}
+    		}
+    	});
+    	lines.on('child_added', function(snapshot) {
+    		var val = snapshot.val();
+    		var line = new google.maps.Polyline({
+    				path: val.path,
+    				geodesic: false,
+    				strokeColor: '#FF0000',
+    				strokeOpacity: 1,
+    				strokeWeight: 1
+    			});
+    		line.setMap(map);
+    		line.addListener('click', function(e) {
+    			snapshot.ref().remove();
+    		});
+    		myLines.push({
+    			line: line,
+    			id: val.id
+    		});
+    	});
+    	lines.on('child_removed', function(snapshot) {
+    		var val = snapshot.val();
+    		for (var i = 0; i < myLines.length; i++) {
+    			var line = myLines[i];
+    			if (line.id == val.id) {
+    				line.line.setMap(null);
+    				myLines.splice(i, 1);
+    				break;
+    			}
+    		}
+		});
       }
 
-		var config = {
-		    apiKey: "AIzaSyCc6Z3xARTskSNQZOC8XmLKXmyUn3gXmjs",
-		    authDomain: "shadowrunmap.firebaseapp.com",
-		    databaseURL: "https://shadowrunmap.firebaseio.com",
-		    projectId: "shadowrunmap",
-		    storageBucket: "shadowrunmap.appspot.com",
-		    messagingSenderId: "9558394399"
-		  };
-		  firebase.initializeApp(config);
-		  firebase.auth().onAuthStateChanged(function(user) {
-        	var markers = firebase.child('markers');
-        	var lines = firebase.child('lines');
-        	markers.on('child_added', function(snapshot) {
-        		var val = snapshot.val();
-        		var marker = new google.maps.Marker({position: new google.maps.LatLng(val.lat, val.lng)});
-        		marker.setMap(map);
-        		marker.addListener('click', function(e) {
-        			snapshot.ref().remove();
-        		});
-        		myMarkers.push({
-        			marker: marker,
-        			id: val.id
-        		});
-        	});
-        	markers.on('child_removed', function(snapshot) {
-        		var val = snapshot.val();
-        		for (var i = 0; i < myMarkers.length; i++) {
-        			var marker = myMarkers[i];
-        			if (marker.id == val.id) {
-        				marker.marker.setMap(null);
-        				myMarkers.splice(i, 1);
-        				break;
-        			}
-        		}
-        	});
-        	lines.on('child_added', function(snapshot) {
-        		var val = snapshot.val();
-        		var line = new google.maps.Polyline({
-        				path: val.path,
-        				geodesic: false,
-        				strokeColor: '#FF0000',
-        				strokeOpacity: 1,
-        				strokeWeight: 1
-        			});
-        		line.setMap(map);
-        		line.addListener('click', function(e) {
-        			snapshot.ref().remove();
-        		});
-        		myLines.push({
-        			line: line,
-        			id: val.id
-        		});
-        	});
-        	lines.on('child_removed', function(snapshot) {
-        		var val = snapshot.val();
-        		for (var i = 0; i < myLines.length; i++) {
-        			var line = myLines[i];
-        			if (line.id == val.id) {
-        				line.line.setMap(null);
-        				myLines.splice(i, 1);
-        				break;
-        			}
-        		}
-        	});
-        });
-		firebase.auth().signInAnonymously();
+      function mouseDown(event) {
+        console.log(event.button);
+      }
+
+      function mouseUp(event) {
+        console.log(event.button);
+      }
+
+		// var config = {
+		//     apiKey: "AIzaSyCc6Z3xARTskSNQZOC8XmLKXmyUn3gXmjs",
+		//     authDomain: "shadowrunmap.firebaseapp.com",
+		//     databaseURL: "https://shadowrunmap.firebaseio.com",
+		//     projectId: "shadowrunmap",
+		//     storageBucket: "shadowrunmap.appspot.com",
+		//     messagingSenderId: "9558394399"
+		//   };
+		//   firebase.initializeApp(config);
+		//   firebase.auth().onAuthStateChanged(function(user) {
+        	
+  //       	});
+        
+		// firebase.auth().signInAnonymously();
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCplpgXDpN4kI1ovfu014LV1xw_bkMGXo8&callback=initMap"
     async defer></script>
