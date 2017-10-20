@@ -18,6 +18,9 @@
       }
     </style>
     <script src="https://www.gstatic.com/firebasejs/4.5.2/firebase.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/geocodezip/geoxml3/master/polys/geoxml3.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/geocodezip/geoxml3/master/ProjectedOverlay.js"></script>
   </head>
   <body>
     <div id="map"></div>
@@ -77,21 +80,31 @@
 		  name: 'Custom Style'
 		};
 
-		map.data.setStyle({
-			strokeWeight: 0
-		});
-
 		var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
 
 		map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
 
-		var ctaLayer = new google.maps.KmlLayer({
-          url: "https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw&dummy=" + (new Date()).getTime(),
-          map: map
-        });
+		// var ctaLayer = new google.maps.KmlLayer({
+  //         url: "https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw&dummy=" + (new Date()).getTime(),
+  //         map: map
+  //       });
 
-		  initAuthentication(initFirebase.bind(undefined, heatmap));
+		  //initAuthentication(initFirebase.bind(undefined, heatmap));
+		  var geoXml = new geoXML3.parser({
+		        map: map,
+		        singleInfoWindow: true,
+		        afterParse: useTheData
+		    });
+		    geoXml.parse('https://google.com/maps/d/kml?mid=1vTTZrcPvgTyuGV9EJjYxoZUDLZw');
       }
+
+      function useTheData(doc) {
+	    // Geodata handling goes here, using JSON properties of the doc object
+	    // for (var i = 0; i < doc[0].markers.length; i++) {
+	    //     // console.log(doc[0].markers[i].title);
+	    //     jQuery('#map_text').append(doc[0].markers[i].title + ', ');
+	    // }
+	    };
 
       /**
 		* Reference to Firebase database.
