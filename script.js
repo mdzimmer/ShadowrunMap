@@ -26,106 +26,107 @@ var featureOpts = [{
 }, {
     "elementType": "geometry",
     "stylers": [{
-        "color": "#f5f5f5"
-    }]
-}, {
-    "elementType": "labels.icon",
-    "stylers": [{
-        "visibility": "off"
+        "color": "#242f3e"
     }]
 }, {
     "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#616161"
+        "color": "#746855"
     }]
 }, {
     "elementType": "labels.text.stroke",
     "stylers": [{
-        "color": "#f5f5f5"
+        "color": "#242f3e"
     }]
 }, {
-    "featureType": "administrative.land_parcel",
+    "featureType": "administrative.locality",
     "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#bdbdbd"
-    }]
-}, {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [{
-        "color": "#eeeeee"
+        "color": "#d59563"
     }]
 }, {
     "featureType": "poi",
     "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#757575"
+        "color": "#d59563"
     }]
 }, {
     "featureType": "poi.park",
     "elementType": "geometry",
     "stylers": [{
-        "color": "#e5e5e5"
+        "color": "#263c3f"
     }]
 }, {
     "featureType": "poi.park",
     "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#9e9e9e"
+        "color": "#6b9a76"
     }]
 }, {
     "featureType": "road",
     "elementType": "geometry",
     "stylers": [{
-        "color": "#ffffff"
+        "color": "#38414e"
     }]
 }, {
-    "featureType": "road.arterial",
+    "featureType": "road",
+    "elementType": "geometry.stroke",
+    "stylers": [{
+        "color": "#212a37"
+    }]
+}, {
+    "featureType": "road",
     "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#757575"
+        "color": "#9ca5b3"
     }]
 }, {
     "featureType": "road.highway",
     "elementType": "geometry",
     "stylers": [{
-        "color": "#dadada"
+        "color": "#746855"
+    }]
+}, {
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [{
+        "color": "#1f2835"
     }]
 }, {
     "featureType": "road.highway",
     "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#616161"
+        "color": "#f3d19c"
     }]
 }, {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [{
-        "color": "#9e9e9e"
-    }]
-}, {
-    "featureType": "transit.line",
+    "featureType": "transit",
     "elementType": "geometry",
     "stylers": [{
-        "color": "#e5e5e5"
+        "color": "#2f3948"
     }]
 }, {
     "featureType": "transit.station",
-    "elementType": "geometry",
+    "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#eeeeee"
+        "color": "#d59563"
     }]
 }, {
     "featureType": "water",
     "elementType": "geometry",
     "stylers": [{
-        "color": "#c9c9c9"
+        "color": "#17263c"
     }]
 }, {
     "featureType": "water",
     "elementType": "labels.text.fill",
     "stylers": [{
-        "color": "#9e9e9e"
+        "color": "#515c6d"
+    }]
+}, {
+    "featureType": "water",
+    "elementType": "labels.text.stroke",
+    "stylers": [{
+        "color": "#17263c"
     }]
 }];
 var MY_MAPTYPE_ID = "Shadowrun";
